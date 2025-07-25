@@ -51,7 +51,7 @@ count := iter.CountWithPredicate(func(x int) bool { return x > 5 })
 ```go
 // Map to different type
 stringIter := types.MapIterator(intIter, func(x int) string {
-    return strconv.Itoa(x)
+return strconv.Itoa(x)
 })
 ```
 
@@ -59,10 +59,10 @@ stringIter := types.MapIterator(intIter, func(x int) string {
 
 ```go
 types.IteratorFromSlice([]int{1, 2, 3, 4}).
-    Reverse().
-    Map(func(x int) int { return x * x }).
-    Filter(func(x int) bool { return x%2 == 0 }).
-    Each(func(x int) { fmt.Println(x) })
+Reverse().
+Map(func(x int) int { return x * x }).
+Filter(func(x int) bool { return x%2 == 0 }).
+Each(func(x int) { fmt.Println(x) })
 // Output: 16, 4
 ```
 
@@ -116,9 +116,58 @@ isSuperset := set1.IsSupersetOf(set2)
 ```go
 set := types.SetFromSlice([]int{1, 2, 3, 4, 5})
 result := set.Iter().
-    Filter(func(x int) bool { return x > 2 }).
-    Map(func(x int) int { return x * 2 }).
-    Collect()
+Filter(func(x int) bool { return x > 2 }).
+Map(func(x int) int { return x * 2 }).
+Collect()
+```
+
+## OneOf
+
+Generic union type that can hold one of two possible types.
+
+### Creating OneOf
+
+```go
+// Empty OneOf
+oneOf := types.NewOneOf[string, int]()
+
+// Set values
+oneOf.SetT1("hello")
+oneOf.SetT2(42)
+```
+
+### Getting Values
+
+```go
+// Check which type is present
+isT1, isT2 := oneOf.Present()
+
+// Get values with presence check
+if str, ok := oneOf.GetT1(); ok {
+    fmt.Println("String:", str)
+}
+
+if num, ok := oneOf.GetT2(); ok {
+    fmt.Println("Number:", num)
+}
+```
+
+### Example
+
+```go
+oneOf := types.NewOneOf[string, error]()
+
+// Success case
+oneOf.SetT1("operation successful")
+if result, ok := oneOf.GetT1(); ok {
+    fmt.Println(result)
+}
+
+// Error case
+oneOf.SetT2(errors.New("something went wrong"))
+if err, ok := oneOf.GetT2(); ok {
+    fmt.Println("Error:", err)
+}
 ```
 
 ## Requirements
