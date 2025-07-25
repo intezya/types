@@ -74,6 +74,18 @@ func (i *Iterator[T]) Map(fn func(T) T) *Iterator[T] {
 	return i
 }
 
+func MapIterator[T, R any](iterator *Iterator[T], fn func(T) R) *Iterator[R] {
+	return &Iterator[R]{
+		impl: func(yield func(R) bool) {
+			for value := range iterator.impl {
+				if !yield(fn(value)) {
+					return
+				}
+			}
+		},
+	}
+}
+
 func (i *Iterator[T]) Reverse() *Iterator[T] {
 	data := i.Collect()
 
