@@ -1,3 +1,3 @@
 module github.com/intezya/types
 
-go 1.24
+go 1.22
