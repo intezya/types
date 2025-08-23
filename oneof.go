@@ -1,4 +1,4 @@
-package types
+package typez
 
 type OneOf[T1, T2 any] struct {
 	t1   T1

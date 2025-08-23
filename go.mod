@@ -1,3 +1,3 @@
-module github.com/intezya/types
+module github.com/intezya/typez
 
 go 1.22

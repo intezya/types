@@ -1,4 +1,4 @@
-# Types
+# Typez
 
 Generic data structures and utilities for Go.
 
