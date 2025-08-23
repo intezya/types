@@ -5,7 +5,7 @@ Generic data structures and utilities for Go.
 ## Installation
 
 ```bash
-go get github.com/intezya/types
+go get github.com/intezya/typez
 ```
 
 ## Iterator
@@ -16,11 +16,11 @@ Lazy iterator with method chaining for functional-style data processing.
 
 ```go
 // From slice
-iter := types.IteratorFromSlice([]int{1, 2, 3, 4, 5})
+iter := typez.IteratorFromSlice([]int{1, 2, 3, 4, 5})
 
 // From iter.Seq
 seq := slices.Values([]string{"a", "b", "c"})
-iter := types.IteratorFromSeq(seq)
+iter := typez.IteratorFromSeq(seq)
 ```
 
 ### Methods
@@ -50,7 +50,7 @@ count := iter.CountWithPredicate(func(x int) bool { return x > 5 })
 
 ```go
 // Map to different type
-stringIter := types.MapIterator(intIter, func(x int) string {
+stringIter := typez.MapIterator(intIter, func(x int) string {
 return strconv.Itoa(x)
 })
 ```
@@ -58,7 +58,7 @@ return strconv.Itoa(x)
 ### Example
 
 ```go
-types.IteratorFromSlice([]int{1, 2, 3, 4}).
+typez.IteratorFromSlice([]int{1, 2, 3, 4}).
 Reverse().
 Map(func(x int) int { return x * x }).
 Filter(func(x int) bool { return x%2 == 0 }).
@@ -74,10 +74,10 @@ Generic set implementation with common set operations.
 
 ```go
 // Empty set
-set := types.NewSet[int]()
+set := typez.NewSet[int]()
 
 // From slice
-set := types.SetFromSlice([]string{"a", "b", "c"})
+set := typez.SetFromSlice([]string{"a", "b", "c"})
 ```
 
 ### Basic Operations
@@ -93,8 +93,8 @@ values := set.Values()
 ### Set Operations
 
 ```go
-set1 := types.SetFromSlice([]int{1, 2, 3})
-set2 := types.SetFromSlice([]int{3, 4, 5})
+set1 := typez.SetFromSlice([]int{1, 2, 3})
+set2 := typez.SetFromSlice([]int{3, 4, 5})
 
 // Union (modifies set1)
 set1.Union(set2) // set1 now contains {1, 2, 3, 4, 5}
@@ -114,7 +114,7 @@ isSuperset := set1.IsSupersetOf(set2)
 ### Integration with Iterator
 
 ```go
-set := types.SetFromSlice([]int{1, 2, 3, 4, 5})
+set := typez.SetFromSlice([]int{1, 2, 3, 4, 5})
 result := set.Iter().
 Filter(func(x int) bool { return x > 2 }).
 Map(func(x int) int { return x * 2 }).
@@ -123,13 +123,13 @@ Collect()
 
 ## OneOf
 
-Generic union type that can hold one of two possible types.
+Generic union type that can hold one of two possible typez.
 
 ### Creating OneOf
 
 ```go
 // Empty OneOf
-oneOf := types.NewOneOf[string, int]()
+oneOf := typez.NewOneOf[string, int]()
 
 // Set values
 oneOf.SetT1("hello")
@@ -155,7 +155,7 @@ if num, ok := oneOf.GetT2(); ok {
 ### Example
 
 ```go
-oneOf := types.NewOneOf[string, error]()
+oneOf := typez.NewOneOf[string, error]()
 
 // Success case
 oneOf.SetT1("operation successful")
